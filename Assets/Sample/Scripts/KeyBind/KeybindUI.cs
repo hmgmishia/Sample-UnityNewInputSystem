@@ -32,7 +32,7 @@ namespace DefaultNamespace
             Load(true);
             foreach (var keybindUIItem in _keybindUIItems)
             {
-                keybindUIItem.OnStartKeybind += control => _overlay.SetActive(true);
+                keybindUIItem.OnStartKeybind += () => _overlay.SetActive(true);
                 keybindUIItem.OnCompletedKeybind += () =>
                 {
                     _overlay.SetActive(false);

@@ -14,30 +14,9 @@ namespace DefaultNamespace
         [SerializeField]
         private KeybindItemButton[] _buttons;
 
-        private Action<InputControl> _onStartKeybind;
-
-        public event Action<InputControl> OnStartKeybind
-        {
-            add => _onStartKeybind += value;
-            remove => _onStartKeybind -= value;
-        }
-
-        private Action _onCompletedKeybind;
-
-        public event Action OnCompletedKeybind
-        {
-            add => _onCompletedKeybind += value;
-            remove => _onCompletedKeybind -= value;
-        }
-
-
-        private Action _onCanceledKeybind;
-
-        public event Action OnCanceledKeybind
-        {
-            add => _onCanceledKeybind += value;
-            remove => _onCanceledKeybind -= value;
-        }
+        public event Action OnStartKeybind;
+        public event Action OnCompletedKeybind;
+        public event Action OnCanceledKeybind;
 
         private int _bindingCount;
 
@@ -66,11 +45,11 @@ namespace DefaultNamespace
 
                 buttons.BindButton.onClick.AddListener(() =>
                 {
-                    _onStartKeybind?.Invoke(null);
+                    OnStartKeybind?.Invoke();
                     _rebindingOperation = _reference.action.PerformInteractiveRebinding()
                         .WithTargetBinding(innerIndex)
                         .WithCancelingThrough("<Keyboard>/escape")
-                        .OnCancel(operation => { _onCanceledKeybind?.Invoke(); })
+                        .OnCancel(operation => { OnCanceledKeybind?.Invoke(); })
                         .OnComplete(operation =>
                         {
                             var inputAction = _reference.action;
@@ -86,7 +65,7 @@ namespace DefaultNamespace
                             Rebound();
                             _rebindingOperation?.Dispose();
                             _rebindingOperation = null;
-                            _onCompletedKeybind?.Invoke();
+                            OnCompletedKeybind?.Invoke();
                         })
                         .Start();
                 });
