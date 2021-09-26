@@ -55,7 +55,7 @@
                 {
                     "name": "",
                     "id": "5a568ef1-99ca-479e-893a-9e01ce5cae7c",
-                    "path": "<VirtualMouse>/leftButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -220,7 +220,7 @@
                 {
                     "name": "",
                     "id": "4b7fb0eb-27f4-4c23-b3a0-ae9807b3d16d",
-                    "path": "<VirtualMouse>/delta",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -51,16 +51,15 @@ namespace DefaultNamespace
             var index = 0;
             foreach (var buttons in _buttons)
             {
+                if (!buttons.gameObject.activeSelf)
+                {
+                    continue;
+                }
+
                 //compositeだけループ
                 while (index < _reference.action.bindings.Count && _reference.action.bindings[index].isComposite)
                 {
                     index += 1;
-                }
-
-                if (index >= _reference.action.bindings.Count)
-                {
-                    buttons.gameObject.SetActive(false);
-                    continue;
                 }
 
                 var innerIndex = index;
@@ -108,18 +107,12 @@ namespace DefaultNamespace
             var buttonCount = _buttons.Length;
             _bindingCount = binding.Count(x => !x.isComposite);
 
-            if (_bindingCount >= buttonCount)
-            {
-                return;
-            }
-
             var sub = buttonCount - _bindingCount;
-            for (var i = 0; i < sub; ++i)
+            var abs = Mathf.Abs(sub);
+            for (var i = 0; i < abs; ++i)
             {
-                _reference.action.AddBinding("");
+                _buttons[buttonCount - abs + i].gameObject.SetActive(false);
             }
-
-            _bindingCount += sub;
         }
 
         public void Rebound()
